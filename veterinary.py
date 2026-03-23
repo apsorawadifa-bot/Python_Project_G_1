@@ -1,3 +1,4 @@
+import re
 from tkinter import*
 from tkinter import ttk
 import random
@@ -11,10 +12,13 @@ from tkinter import messagebox
 
 
 class Veterinary:
+
+    
+
     def __init__(self,root):
         self.root=root
         self.root.title("Veterinary Appiontment Appication")
-        self.root.geometry("800x600+0+0")
+        self.root.geometry("800x600+0+0")  
 
 
         labeltitle=Label(self.root,bd=20,relief=RIDGE,text="+ Pet Care Bd",fg="red",bg="white",font=("Times New Roman",30,"bold"))    
@@ -26,7 +30,11 @@ class Veterinary:
         Buttonframe=Frame(self.root,bd=20,relief=RIDGE)
         Buttonframe.place(x=0,y=515,width=800,height=70)
 
+<<<<<<< Updated upstream
         global text_Pet_Name, text_Owner_Name, text_Phone
+=======
+        global text_Pet_Name, text_Owner_Name, text_DOB, text_Breed, text_Appointment_Date, text_Phone
+>>>>>>> Stashed changes
         global pet_type_var, sex_var, vaccinated_var
 
 
@@ -40,10 +48,10 @@ class Veterinary:
         text_Owner_Name=Entry(Dataframe,font=("arial",11,"bold"),width=20)
         text_Owner_Name.grid(row=1,column=1)
 
-        label_Phone=Label(Dataframe,text="Phone Number:",font=("Calibri(Body)",13,"bold"),padx=2,pady=6,)
-        label_Phone.grid(row=2,column=0,sticky=W)
-        text_Phone=Entry(Dataframe,font=("arial",11,"bold"),width=20)
-        text_Phone.grid(row=2,column=1)
+        label_DOB=Label(Dataframe,text="Date of birth",font=("Calibri(Body)",13,"bold"),padx=2,pady=6,)
+        label_DOB.grid(row=2,column=0,sticky=W)
+        text_DOB=Entry(Dataframe,font=("arial",11,"bold"),width=20)
+        text_DOB.grid(row=2,column=1)
 
         label_Pet_Type=Label(Dataframe,text="Pet Type:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Pet_Type.grid(row=3,column=0,sticky=W)
@@ -70,13 +78,27 @@ class Veterinary:
         radio_no=Radiobutton(Dataframe,text="No",variable=vaccinated_var,value="No")
         radio_no.grid(row=5,column=2,sticky=W)
 
-    
+        label_Breed=Label(Dataframe,text="Breed:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
+        label_Breed.grid(row=6,column=0,sticky=W)
+        text_Breed=Entry(Dataframe,font=("arial",11,"bold"),width=20)
+        text_Breed.grid(row=6,column=1)
+
+        label_Appointment_Date=Label(Dataframe,text="Appointment Date:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
+        label_Appointment_Date.grid(row=7,column=0,sticky=W)
+        text_Appointment_Date=Entry(Dataframe,font=("arial",11,"bold"),width=20)
+        text_Appointment_Date.grid(row=7,column=1)
+
+        label_Phone=Label(Dataframe,text="Phone:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
+        label_Phone.grid(row=8,column=0,sticky=W)
+        text_Phone=Entry(Dataframe,font=("arial",11,"bold"),width=20)
+        text_Phone.grid(row=8,column=1)
+
         #=======================================button======================================
 
         button_Doctor_list=Button(Buttonframe,text="Find Doctor",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18)
         button_Doctor_list.grid(row=0,column=0)
 
-        button_update=Button(Buttonframe,text="Update",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18)
+        button_update=Button(Buttonframe,text="Update",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18,command=self.update_info)
         button_update.grid(row=0,column=1)
 
         button_clear=Button(Buttonframe,text="Clear",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18)
@@ -113,8 +135,92 @@ class Veterinary:
 
 #=====================Confirm Button========================    
     
+<<<<<<< Updated upstream
          Button(update_window,text="Confirm",font=("Arial", 12),bg="green",fg="white",command=lambda: [messagebox.showinfo("Success", "Submit Successfully ✅"), update_window.destroy()],width=18).pack(pady=40)
 
+=======
+   
+
+    def update_info(self):
+         update_window = Toplevel()
+         update_window.title("Update Information")
+         update_window.geometry("650x500")
+
+         pet_name = text_Pet_Name.get()
+         if pet_name == "":
+             messagebox.showerror("Error", "Pet Name is required!")
+             return
+         if not pet_name.isalpha():
+             messagebox.showerror("Error", "Pet Name must contain only letters!")
+             return
+         
+         owner_name = text_Owner_Name.get()
+         if not owner_name.isalpha():
+             messagebox.showerror("Error", "Owner Name must contain only letters!")
+             return
+         
+         D_O_B = text_DOB.get()
+         example= r"^\d{1,2}/\d{1,2}/\d{4}$"
+
+         if not re.match(example, D_O_B):
+             messagebox.showerror("Error", "Date must be like dd/mm/yyyy (e.g., 20/05/2025)!")
+             return
+         
+         pet_type =  pet_type_var.get()
+         if not pet_type:
+             messagebox.showerror("Error", "Please select a Pet Type!")
+             return
+         
+         sex = sex_var.get()
+         if not sex:
+             messagebox.showerror("Error", "Please select a Sex!")
+             return
+
+         vaccinated = vaccinated_var.get()
+         if not vaccinated:
+             messagebox.showerror("Error", "Please select if Vaccinated!")
+             return
+         
+         Breed = text_Breed.get()
+         if not Breed.isalpha():
+             messagebox.showerror("Error", "Breed must contain only letters!")
+             return
+         
+         Appointment_Date = text_Appointment_Date.get()
+         #=====================validate date format using regex========================
+         pattern = r"^\d{1,2}/\d{1,2}/\d{4}$"
+
+         if not re.match(pattern, Appointment_Date):
+             messagebox.showerror("Error", "Date must be like dd/mm/yyyy (e.g., 20/04/2026)!")
+             return
+         
+         phone = text_Phone.get()
+         if not phone.isdigit():
+             messagebox.showerror("Error", "Phone must contain only numbers!")
+             return
+
+        
+
+         Label(update_window, text="Pet Name: " + pet_name,font=("Calibri (Body)",11,"bold"),padx=2,pady=6).pack()
+         Label(update_window, text="Owner Name: " + owner_name,font=("Calibri (Body)",11,"bold"),padx=2,pady=6).pack()
+         Label(update_window, text="Date of Birth: " + D_O_B,font=("Calibri (Body)",11,"bold"),padx=2,pady=6).pack()
+         Label(update_window, text="Pet Type: " + pet_type,font=("Calibri (Body)",11,"bold"),padx=2,pady=6).pack()
+         Label(update_window, text="Sex: " + sex,font=("Calibri (Body)",11,"bold"),padx=2,pady=6).pack()
+         Label(update_window, text="Vaccinated: " + vaccinated,font=("Calibri (Body)",11,"bold"),padx=2,pady=6).pack()
+         Label(update_window, text="Breed: " + Breed,font=("Calibri (Body)",11,"bold"),padx=2,pady=6).pack()
+         Label(update_window, text="Appointment Date: " + Appointment_Date,font=("Calibri (Body)",11,"bold"),padx=2,pady=6).pack()
+         Label(update_window, text="Phone: " + phone,font=("Calibri (Body)",11,"bold"),padx=2,pady=6).pack()
+             
+
+#======================close Button========================
+
+         Button(update_window, text="Close", font=("Arial", 12), bg="red", fg="white",command=update_window.destroy,width=18).pack(pady=20)
+
+#=====================Confirm Button========================    
+    
+         Button(update_window,text="Confirm",font=("Arial", 12),bg="green",fg="white",command=lambda: [messagebox.showinfo("Success", "Submit Successfully ✅"), update_window.destroy()],width=18).pack(pady=40)
+    
+>>>>>>> Stashed changes
 
 root=Tk() 
 ob=Veterinary(root)
