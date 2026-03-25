@@ -107,6 +107,19 @@ class Veterinary:
         button_exit=Button(Buttonframe,text="Exit",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18)
         button_exit.grid(row=0,column=3)
 
+    def clear_data(self):
+         self.text_Pet_Name.delete(0, END)
+         self.text_Owner_Name.delete(0, END)
+         self.text_DOB.delete(0, END)
+         self.text_Phone.delete(0, END)
+         self.text_Breed.delete(0, END)
+         self.text_Appointment_Date.delete(0, END)
+
+         self.pet_type_var.set("")
+         self.sex_var.set("")
+         self.vaccinated_var.set("")
+
+
     def update_info(self):
          update_window = Toplevel()
          update_window.title("Update Information")
@@ -224,4 +237,4 @@ class Veterinary:
 
 root=Tk() 
 ob=Veterinary(root)
-root.mainloop()
+root.mainloop()def clear_data(self):
