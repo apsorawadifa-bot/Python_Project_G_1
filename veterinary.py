@@ -31,11 +31,10 @@ class Veterinary:
         Buttonframe=Frame(self.root,bd=20,relief=RIDGE)
         Buttonframe.place(x=0,y=515,width=800,height=70)
 
-<<<<<<< Updated upstream
+
         global text_Pet_Name, text_Owner_Name, text_Phone
-=======
+
         global text_Pet_Name, text_Owner_Name, text_DOB, text_Breed, text_Appointment_Date, text_Phone
->>>>>>> Stashed changes
         global pet_type_var, sex_var, vaccinated_var
 
 
@@ -204,3 +203,50 @@ class Veterinary:
     
          Button(update_window,text="Confirm",font=("Arial", 12),bg="green",fg="white",command=lambda: [messagebox.showinfo("Success", "Submit Successfully ✅"), update_window.destroy()],width=18).pack(pady=40)
     
+
+    def find_doctor_window(self):
+         self.find_doctor=Toplevel()  
+         self.find_doctor.title("Find the Doctor")
+         self.find_doctor.geometry("800x400")
+
+
+         self.doctor_var = StringVar()
+         
+         self.tree = ttk.Treeview(self.find_doctor, columns=("Name", "Specialty", "Phone", "Day", "Time"), show="headings")
+         self.tree.heading("Name", text="Name")
+         self.tree.heading("Specialty", text="Specialty")
+         self.tree.heading("Phone", text="Phone")
+         self.tree.heading("Day", text="Day")
+         self.tree.heading("Time", text="Time")
+
+         doctors = [
+         {"Name": "Dr. Liza", "Specialty": "Cat", "Phone": "123456", "Day": "Monday to Wednesday", "Time": "12:00 PM - 4:00 PM"},
+         {"Name": "Dr. Narisha", "Specialty": "Bird", "Phone": "654321", "Day": "Thursday to Saturday", "Time": "10:00 AM - 6:00 PM"},
+         {"Name": "Dr. Apsora", "Specialty": "Dog", "Phone": "987654", "Day": "Monday to Friday", "Time": "10:00 PM - 6:00 AM"},
+         {"Name": "Dr. Amira", "Specialty": "Cat", "Phone": "456789", "Day": "Tuesday to Saturday", "Time": "8:00 AM - 5:00 PM"},
+         {"Name": "Dr. Yash", "Specialty": "Medicine", "Phone": "321654", "Day": "Sunday to Wednesday", "Time": "6:00 AM - 3:00 PM"},
+         {"Name": "Dr. Rafi", "Specialty": "Surgery", "Phone": "789123", "Day": "Thursday to Saturday", "Time": "3:00 PM - 12:00 AM"},
+         ]
+
+         for doc in doctors:
+            self.tree.insert("", END, values=(doc["Name"], doc["Specialty"], doc["Phone"] ,doc["Day"], doc["Time"]))
+
+         self.tree.pack(pady=20, fill=BOTH, expand=True)    
+
+         Button(self.find_doctor, text="Select Doctor",bg="green",fg="white",font=("Calibri (Body)",13,"bold"), command=self.select_doctor).pack(pady=20)
+
+
+        
+        
+    def select_doctor(self):
+
+         selected = self.tree.selection()
+         if not selected:
+             messagebox.showerror("Error", "Please select a doctor!")
+             return
+         
+         selection_id= selected[0]
+         doctor_info = self.tree.item(selected, "values")
+         self.doctor_var.set(doctor_info[0])  
+         messagebox.showinfo("Doctor Selected", f"You have selected {doctor_info[0]} as your doctor.")
+         self.find_doctor.destroy()
