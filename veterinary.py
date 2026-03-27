@@ -1,3 +1,4 @@
+from logging import root
 import re
 from tkinter import*
 from tkinter import ttk
@@ -40,22 +41,22 @@ class Veterinary:
 
         label_Pet_Name=Label(Dataframe,text="Pet Name:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Pet_Name.grid(row=0,column=0,sticky=W)
-        text_Pet_Name=Entry(Dataframe,font=("arial",11,"bold"),width=20)
-        text_Pet_Name.grid(row=0,column=1)
+        self.text_Pet_Name=Entry(Dataframe,font=("arial",11,"bold"),width=20)
+        self.text_Pet_Name.grid(row=0,column=1)
 
         label_Owner_Name=Label(Dataframe,text="Owner Name:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Owner_Name.grid(row=1,column=0,sticky=W)
-        text_Owner_Name=Entry(Dataframe,font=("arial",11,"bold"),width=20)
-        text_Owner_Name.grid(row=1,column=1)
+        self.text_Owner_Name=Entry(Dataframe,font=("arial",11,"bold"),width=20)
+        self.text_Owner_Name.grid(row=1,column=1)
 
         label_DOB=Label(Dataframe,text="Date of birth",font=("Calibri(Body)",13,"bold"),padx=2,pady=6,)
         label_DOB.grid(row=2,column=0,sticky=W)
-        text_DOB=Entry(Dataframe,font=("arial",11,"bold"),width=20)
-        text_DOB.grid(row=2,column=1)
+        self.text_DOB=Entry(Dataframe,font=("arial",11,"bold"),width=20)
+        self.text_DOB.grid(row=2,column=1)
 
         label_Pet_Type=Label(Dataframe,text="Pet Type:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Pet_Type.grid(row=3,column=0,sticky=W)
-        pet_type_var=StringVar()
+        self.pet_type_var=StringVar()
         combo_Pet_Type=ttk.Combobox(Dataframe,textvariable=pet_type_var,state="readonly",font=("arial",11,"bold"),width=18)
         combo_Pet_Type['values']=("Dog", "Cat", "Bird") 
         combo_Pet_Type.grid(row=3, column=1)
@@ -63,7 +64,7 @@ class Veterinary:
 
         label_Sex=Label(Dataframe,text="Sex:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Sex.grid(row=4,column=0,sticky=W)
-        sex_var = StringVar()
+        self.sex_var = StringVar()
 
         male_radio = Radiobutton(Dataframe, text="Male", variable=sex_var, value="Male")
         male_radio.grid(row=4, column=1, sticky=W)
@@ -80,18 +81,22 @@ class Veterinary:
 
         label_Breed=Label(Dataframe,text="Breed:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Breed.grid(row=6,column=0,sticky=W)
-        text_Breed=Entry(Dataframe,font=("arial",11,"bold"),width=20)
-        text_Breed.grid(row=6,column=1)
+        self.text_Breed=Entry(Dataframe,font=("arial",11,"bold"),width=20)
+        self.text_Breed.grid(row=6,column=1)
+
+class Veterinary:
+    def __init__(self,root):
+        self.text_Breed.grid(row=6,column=1) 
 
         label_Appointment_Date=Label(Dataframe,text="Appointment Date:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Appointment_Date.grid(row=7,column=0,sticky=W)
-        text_Appointment_Date=Entry(Dataframe,font=("arial",11,"bold"),width=20)
-        text_Appointment_Date.grid(row=7,column=1)
+        self.text_Appointment_Date=Entry(Dataframe,font=("arial",11,"bold"),width=20)
+        self.text_Appointment_Date.grid(row=7,column=1)
 
         label_Phone=Label(Dataframe,text="Phone:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Phone.grid(row=8,column=0,sticky=W)
-        text_Phone=Entry(Dataframe,font=("arial",11,"bold"),width=20)
-        text_Phone.grid(row=8,column=1)
+        self.text_Phone=Entry(Dataframe,font=("arial",11,"bold"),width=20)
+        self.text_Phone.grid(row=8,column=1)
 
         #=======================================button======================================
 
@@ -118,41 +123,7 @@ class Veterinary:
          self.pet_type_var.set("")
          self.sex_var.set("")
          self.vaccinated_var.set("")
-
-
-    def update_info(self):
-         update_window = Toplevel()
-         update_window.title("Update Information")
-         update_window.geometry("600x400")
-
-         pet_name = text_Pet_Name.get()
-         owner_name = text_Owner_Name.get()
-         phone = text_Phone.get()
-         pet_type = pet_type_var.get()
-         sex = sex_var.get()
-         vaccinated = vaccinated_var.get()
-
         
-
-         Label(update_window, text="Pet Name: " + pet_name,font=("Calibri (Body)",13,"bold"),padx=2,pady=6).pack()
-         Label(update_window, text="Owner Name: " + owner_name,font=("Calibri (Body)",13,"bold"),padx=2,pady=6).pack()
-         Label(update_window, text="Phone: " + phone,font=("Calibri (Body)",13,"bold"),padx=2,pady=6).pack()
-         Label(update_window, text="Pet Type: " + pet_type,font=("Calibri (Body)",13,"bold"),padx=2,pady=6).pack()
-         Label(update_window, text="Sex: " + sex,font=("Calibri (Body)",13,"bold"),padx=2,pady=6).pack()
-         Label(update_window, text="Vaccinated: " + vaccinated,font=("Calibri (Body)",13,"bold"),padx=2,pady=6).pack()
-             
-
-#======================close Button========================
-
-         Button(update_window, text="Close", font=("Arial", 12), bg="red", fg="white",command=update_window.destroy,width=18).pack(pady=20)
-
-#=====================Confirm Button========================    
-    
-<<<<<<< Updated upstream
-         Button(update_window,text="Confirm",font=("Arial", 12),bg="green",fg="white",command=lambda: [messagebox.showinfo("Success", "Submit Successfully ✅"), update_window.destroy()],width=18).pack(pady=40)
-
-=======
-   
 
     def update_info(self):
          update_window = Toplevel()
@@ -233,8 +204,3 @@ class Veterinary:
     
          Button(update_window,text="Confirm",font=("Arial", 12),bg="green",fg="white",command=lambda: [messagebox.showinfo("Success", "Submit Successfully ✅"), update_window.destroy()],width=18).pack(pady=40)
     
->>>>>>> Stashed changes
-
-root=Tk() 
-ob=Veterinary(root)
-root.mainloop()def clear_data(self):
