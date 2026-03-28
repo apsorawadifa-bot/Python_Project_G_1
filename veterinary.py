@@ -14,7 +14,7 @@ class Veterinary:
 
     def __init__(self,root):
         self.root=root
-        self.root.title("Veterinary Appiontment Appication")
+        self.root.title("Veterinary Appointment Appication")
         self.root.geometry("800x600")  
 
 
