@@ -1,10 +1,6 @@
-from logging import root
 import re
 from tkinter import*
 from tkinter import ttk
-import random
-import time
-import datetime
 from tkinter import messagebox
 
 
@@ -19,7 +15,7 @@ class Veterinary:
     def __init__(self,root):
         self.root=root
         self.root.title("Veterinary Appiontment Appication")
-        self.root.geometry("800x600+0+0")  
+        self.root.geometry("800x600")  
 
 
         labeltitle=Label(self.root,bd=20,relief=RIDGE,text="+ Pet Care Bd",fg="red",bg="white",font=("Times New Roman",30,"bold"))    
@@ -30,12 +26,6 @@ class Veterinary:
 
         Buttonframe=Frame(self.root,bd=20,relief=RIDGE)
         Buttonframe.place(x=0,y=515,width=800,height=70)
-
-
-        global text_Pet_Name, text_Owner_Name, text_Phone
-
-        global text_Pet_Name, text_Owner_Name, text_DOB, text_Breed, text_Appointment_Date, text_Phone
-        global pet_type_var, sex_var, vaccinated_var
 
 
         label_Pet_Name=Label(Dataframe,text="Pet Name:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
@@ -56,7 +46,7 @@ class Veterinary:
         label_Pet_Type=Label(Dataframe,text="Pet Type:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Pet_Type.grid(row=3,column=0,sticky=W)
         self.pet_type_var=StringVar()
-        combo_Pet_Type=ttk.Combobox(Dataframe,textvariable=pet_type_var,state="readonly",font=("arial",11,"bold"),width=18)
+        combo_Pet_Type=ttk.Combobox(Dataframe,textvariable=self.pet_type_var,state="readonly",font=("arial",11,"bold"),width=18)
         combo_Pet_Type['values']=("Dog", "Cat", "Bird") 
         combo_Pet_Type.grid(row=3, column=1)
 
@@ -65,27 +55,23 @@ class Veterinary:
         label_Sex.grid(row=4,column=0,sticky=W)
         self.sex_var = StringVar()
 
-        male_radio = Radiobutton(Dataframe, text="Male", variable=sex_var, value="Male")
+        male_radio = Radiobutton(Dataframe, text="Male", variable=self.sex_var, value="Male")
         male_radio.grid(row=4, column=1, sticky=W)
-        female_radio = Radiobutton(Dataframe, text="Female", variable=sex_var, value="Female") 
+        female_radio = Radiobutton(Dataframe, text="Female", variable=self.sex_var, value="Female") 
         female_radio.grid(row=4, column=2, sticky=W)
 
         label_Vaccinated=Label(Dataframe,text="Vaccinated:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6,)
         label_Vaccinated.grid(row=5,column=0,sticky=W)
-        vaccinated_var=StringVar()
-        radio_yes=Radiobutton(Dataframe,text="Yes",variable=vaccinated_var,value="Yes")
+        self.vaccinated_var=StringVar()
+        radio_yes=Radiobutton(Dataframe,text="Yes",variable=self.vaccinated_var,value="Yes")
         radio_yes.grid(row=5,column=1,sticky=W)
-        radio_no=Radiobutton(Dataframe,text="No",variable=vaccinated_var,value="No")
+        radio_no=Radiobutton(Dataframe,text="No",variable=self.vaccinated_var,value="No")
         radio_no.grid(row=5,column=2,sticky=W)
 
         label_Breed=Label(Dataframe,text="Breed:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Breed.grid(row=6,column=0,sticky=W)
         self.text_Breed=Entry(Dataframe,font=("arial",11,"bold"),width=20)
         self.text_Breed.grid(row=6,column=1)
-
-class Veterinary:
-    def __init__(self,root):
-        self.text_Breed.grid(row=6,column=1) 
 
         label_Appointment_Date=Label(Dataframe,text="Appointment Date:",font=("Calibri (Body)",13,"bold"),padx=2,pady=6)
         label_Appointment_Date.grid(row=7,column=0,sticky=W)
@@ -97,18 +83,21 @@ class Veterinary:
         self.text_Phone=Entry(Dataframe,font=("arial",11,"bold"),width=20)
         self.text_Phone.grid(row=8,column=1)
 
+        
+
+
         #=======================================button======================================
 
-        button_Doctor_list=Button(Buttonframe,text="Find Doctor",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18)
+        button_Doctor_list=Button(Buttonframe,text="Find Doctor",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18,command=self.find_doctor_window)
         button_Doctor_list.grid(row=0,column=0)
 
         button_update=Button(Buttonframe,text="Update",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18,command=self.update_info)
         button_update.grid(row=0,column=1)
 
-        button_clear=Button(Buttonframe,text="Clear",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18)
+        button_clear=Button(Buttonframe,text="Clear",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18,command=self.clear_data)
         button_clear.grid(row=0,column=2)
 
-        button_exit=Button(Buttonframe,text="Exit",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18)
+        button_exit=Button(Buttonframe,text="Exit",bg="green",fg="white",font=("Calibri (Body)",13,"bold"),width=18,command=self.root.destroy)
         button_exit.grid(row=0,column=3)
 
     def clear_data(self):
@@ -129,7 +118,7 @@ class Veterinary:
          update_window.title("Update Information")
          update_window.geometry("650x500")
 
-         pet_name = text_Pet_Name.get()
+         pet_name = self.text_Pet_Name.get()
          if pet_name == "":
              messagebox.showerror("Error", "Pet Name is required!")
              return
@@ -137,39 +126,39 @@ class Veterinary:
              messagebox.showerror("Error", "Pet Name must contain only letters!")
              return
          
-         owner_name = text_Owner_Name.get()
+         owner_name =self. text_Owner_Name.get()
          if not owner_name.isalpha():
-             messagebox.showerror("Error", "Owner Name must contain only letters!")
+             messagebox.showerror("Error", "Please enter a valid Owner Name (letters only)!")
              return
          
-         D_O_B = text_DOB.get()
+         D_O_B = self.text_DOB.get()
          example= r"^\d{1,2}/\d{1,2}/\d{4}$"
 
          if not re.match(example, D_O_B):
              messagebox.showerror("Error", "Date must be like dd/mm/yyyy (e.g., 20/05/2025)!")
              return
          
-         pet_type =  pet_type_var.get()
+         pet_type = self. pet_type_var.get()
          if not pet_type:
              messagebox.showerror("Error", "Please select a Pet Type!")
              return
          
-         sex = sex_var.get()
+         sex = self.sex_var.get()
          if not sex:
              messagebox.showerror("Error", "Please select a Sex!")
              return
 
-         vaccinated = vaccinated_var.get()
+         vaccinated =self. vaccinated_var.get()
          if not vaccinated:
              messagebox.showerror("Error", "Please select if Vaccinated!")
              return
          
-         Breed = text_Breed.get()
+         Breed = self.text_Breed.get()
          if not Breed.isalpha():
-             messagebox.showerror("Error", "Breed must contain only letters!")
+             messagebox.showerror("Error", " Please enter a valid Breed (letters only)!")
              return
          
-         Appointment_Date = text_Appointment_Date.get()
+         Appointment_Date = self.text_Appointment_Date.get()
          #=====================validate date format using regex========================
          pattern = r"^\d{1,2}/\d{1,2}/\d{4}$"
 
@@ -177,7 +166,7 @@ class Veterinary:
              messagebox.showerror("Error", "Date must be like dd/mm/yyyy (e.g., 20/04/2026)!")
              return
          
-         phone = text_Phone.get()
+         phone = self.text_Phone.get()
          if not phone.isdigit():
              messagebox.showerror("Error", "Phone must contain only numbers!")
              return
